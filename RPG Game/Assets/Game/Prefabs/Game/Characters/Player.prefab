@@ -2250,6 +2250,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1077169172, guid: 8a83d2fa026be214f9f102480395c4c2, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1332651887, guid: 8a83d2fa026be214f9f102480395c4c2, type: 3}
       propertyPath: weapon
       value: 

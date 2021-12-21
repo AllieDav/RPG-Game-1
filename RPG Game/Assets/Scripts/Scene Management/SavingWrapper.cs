@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using RPG.Saving;
+using UnityEngine.AI;
 
 namespace RPG.SceneManagement
 {
@@ -14,7 +15,10 @@ namespace RPG.SceneManagement
         {
             FindObjectOfType<Fader>().FadeOutImmediate();
             yield return GetComponent<SavingSystem>().LoadLastScene(defaultSaveFile);
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            player.GetComponent<NavMeshAgent>().enabled = false;
             Load();
+            player.GetComponent<NavMeshAgent>().enabled = true;
             yield return FindObjectOfType<Fader>().FadeIn(fadeInTime);
         }
 
@@ -25,6 +29,10 @@ namespace RPG.SceneManagement
                 Load();
             }
             if (Input.GetKeyDown(KeyCode.S))
+            {
+                Save();
+            }
+            if(FindObjectOfType<AutoSave>().GetAutoSave() == true)
             {
                 Save();
             }

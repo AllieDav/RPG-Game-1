@@ -71,6 +71,7 @@ namespace RPG.SceneManagement
             player.GetComponent<NavMeshAgent>().enabled = false;
             player.transform.position = otherPortal.spawnPoint.transform.position;
             player.transform.rotation = otherPortal.spawnPoint.transform.rotation;
+            player.GetComponent<NavMeshAgent>().enabled = true;
         }
 
         private Portal GetOtherPortal()
