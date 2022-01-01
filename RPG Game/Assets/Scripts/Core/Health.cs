@@ -28,7 +28,7 @@ namespace RPG.Core
 
             if (healthPoints == 0)
             {
-                Die();
+                StartCoroutine(Die());
             }
         }
 
@@ -37,17 +37,18 @@ namespace RPG.Core
             healthPoints = Mathf.Max(healthPoints - damage, 0);
             if (healthPoints == 0)
             {
-                Die();
+                StartCoroutine(Die());
             }
         }
 
-        private void Die()
+        private IEnumerator Die()
         {
-            if (isDead) return;
+            if (isDead) StopCoroutine(Die());
 
             isDead = true;
-            GetComponent<Animator>().SetTrigger("die");
+            yield return new WaitForSeconds(0.3f);
             GetComponent<ActionScheduler>().CancelCurrentAction();
+            GetComponent<Animator>().SetTrigger("die");
         }
     }
 }
