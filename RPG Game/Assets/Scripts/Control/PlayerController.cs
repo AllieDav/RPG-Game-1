@@ -1,6 +1,6 @@
 ﻿using System;
 using RPG.Combat;
-using RPG.Core;
+using RPG.Attributes;
 using RPG.Movement;
 using UnityEngine;
 
@@ -17,9 +17,10 @@ namespace RPG.Control
 
         private void Update()
         {
-            if (health.IsDead()) return;
+            if (health.GetIsDead()) return;
 
             if (InteractWithCombat()) return;
+
             if (InteractWithMovement()) return;
         }
 
@@ -39,6 +40,7 @@ namespace RPG.Control
                 if (Input.GetMouseButton(0))
                 {
                     GetComponent<Fighter>().Attack(target.gameObject);
+                    FindObjectOfType<EnemyHealthDisplay>().StartDisplay(target.gameObject.GetComponent<Health>());
                 }
                 return true;
             }

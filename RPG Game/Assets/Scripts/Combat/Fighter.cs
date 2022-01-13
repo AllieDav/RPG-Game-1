@@ -3,6 +3,7 @@ using RPG.Movement;
 using RPG.Core;
 using System;
 using RPG.Saving;
+using RPG.Attributes;
 
 namespace RPG.Combat
 {
@@ -30,7 +31,7 @@ namespace RPG.Combat
             timeSinceLastAttack += Time.deltaTime;
 
             if (target == null) return;
-            if (target.IsDead()) return;
+            if (target.GetIsDead()) return;
 
             if (!GetIsInRange())
             {
@@ -74,9 +75,9 @@ namespace RPG.Combat
 
             if (currentWeapon.HasProjectile())
             { 
-                currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, target);
+                currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, target, gameObject);
             }
-            else target.TakeDamage(currentWeapon.weaponDamage);
+            else target.TakeDamage(gameObject, currentWeapon.weaponDamage);
         }
         void Shoot()
         {
@@ -92,7 +93,7 @@ namespace RPG.Combat
         {
             if (combatTarget == null) { return false; }
             Health targetToTest = combatTarget.GetComponent<Health>();
-            return targetToTest != null && !targetToTest.IsDead();
+            return targetToTest != null && !targetToTest.GetIsDead();
         }
 
         public void Attack(GameObject combatTarget)
@@ -112,7 +113,14 @@ namespace RPG.Combat
         {
             GetComponent<Animator>().ResetTrigger("attack");
             GetComponent<Animator>().SetTrigger("stopAttack");
-        }public object CaptureState()
+        }
+        
+        public Health GetTarget()
+        {
+            return target;
+        }
+
+        public object CaptureState()
         {
             return currentWeapon.name;
         }
@@ -120,7 +128,7 @@ namespace RPG.Combat
         public void RestoreState(object state)
         {
             string weaponName = (string)state;
-            Weapon weapon = Resources.Load<Weapon>(weaponName);
+            Weapon weapon = UnityEngine.Resources.Load<Weapon>(weaponName);
             EquipWeapon(weapon);
         }
     }

@@ -3,23 +3,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using RPG.Saving;
+using RPG.Stats;
+using RPG.Core;
 
-namespace RPG.Core
+namespace RPG.Attributes
 {
     public class Health : MonoBehaviour, ISaveable
     {
         [SerializeField] float healthPoints = 100f;
-
         bool isDead = false;
+
+
+        private void Awake()
+        {
+            healthPoints = GetComponent<BaseStats>().GetLevelHealth();
+        }
 
         public object CaptureState()
         {
             return healthPoints;
         }
 
-        public bool IsDead()
+        public bool GetIsDead()
         {
             return isDead;
+        }
+
+        public float GetHealth()
+        {
+            return healthPoints;
         }
 
         public void RestoreState(object state)
@@ -32,9 +44,10 @@ namespace RPG.Core
             }
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(GameObject instigator, float damage)
         {
             healthPoints = Mathf.Max(healthPoints - damage, 0);
+
             if (healthPoints == 0)
             {
                 StartCoroutine(Die());

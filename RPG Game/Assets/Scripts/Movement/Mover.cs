@@ -4,6 +4,7 @@ using RPG.Core;
 using UnityEngine;
 using UnityEngine.AI;
 using RPG.Saving;
+using RPG.Attributes;
 
 namespace RPG.Movement
 {
@@ -22,7 +23,7 @@ namespace RPG.Movement
 
         void Update()
         {
-            navMeshAgent.enabled = !health.IsDead();
+            navMeshAgent.enabled = !health.GetIsDead();
 
             UpdateAnimator();
         }

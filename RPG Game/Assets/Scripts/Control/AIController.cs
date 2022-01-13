@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using RPG.Combat;
 using RPG.Core;
 using RPG.Movement;
+using RPG.Attributes;
 using UnityEngine;
 
 namespace RPG.Control
@@ -38,7 +39,7 @@ namespace RPG.Control
 
         private void Update()
         {
-            if (health.IsDead()) return;
+            if (health.GetIsDead()) return;
 
             if (InAttackRangeOfPlayer() && fighter.CanAttack(player))
             {
