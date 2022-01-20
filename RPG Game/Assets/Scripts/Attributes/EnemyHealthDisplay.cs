@@ -39,17 +39,19 @@ namespace RPG.Attributes
         public void StartDisplay(Health target)
         {
             enemy = target;
+
+            GetComponent<Slider>().maxValue = enemy.GetComponent<BaseStats>().GetStat(Stat.Health);
+
             ToggleDisplay(true);
 
-            GetComponent<Slider>().maxValue = enemy.GetComponent<BaseStats>().GetLevelHealth();
-            StartCoroutine(UpdateDisplay(GetComponent<Slider>().maxValue));
+            StartCoroutine(UpdateDisplay(enemy.GetComponent<Health>().GetHealth()));
         }
 
         private IEnumerator UpdateDisplay(float health)
         {
             GetComponent<Slider>().value = health;
 
-            if (enemy.GetComponent<Health>().GetHealth() <= 0)
+            if (health <= 0)
             {
                 greenFill.SetActive(false);
                 redBackround.SetActive(true);
@@ -59,7 +61,7 @@ namespace RPG.Attributes
                 enemy = null;
             }
 
-            if (GetComponent<Slider>().maxValue == GetComponent<Slider>().value)
+            if (GetComponent<Slider>().maxValue == health)
             {
                 greenFill.SetActive(true);
                 redBackround.SetActive(false);

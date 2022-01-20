@@ -16,12 +16,17 @@ namespace RPG.Attributes
         private void Awake()
         {
             player = GameObject.FindWithTag("Player");
-            GetComponent<Slider>().maxValue = player.GetComponent<BaseStats>().GetLevelHealth();
+            redBackround.SetActive(false);
+
+            SetMaxValue();
+            UpdateDisplay(GetComponent<Slider>().maxValue);
+
+            player.GetComponent<BaseStats>().OnLevelUp += SetMaxValue;
         }
 
-        private void Start()
+        private void SetMaxValue()
         {
-            UpdateDisplay(GetComponent<Slider>().maxValue);
+            GetComponent<Slider>().maxValue = player.GetComponent<BaseStats>().GetStat(Stat.Health);
         }
 
         private void Update()
@@ -33,13 +38,13 @@ namespace RPG.Attributes
         {
             GetComponent<Slider>().value = health;
 
-            if (player.GetComponent<Health>().GetHealth() <= 0)
+            if (health == 0)
             {
                 greenFill.SetActive(false);
                 redBackround.SetActive(true);
             }
 
-            if (GetComponent<Slider>().maxValue == GetComponent<Slider>().value)
+            if (GetComponent<Slider>().maxValue == health)
             {
                 greenFill.SetActive(true);
                 redBackround.SetActive(false);

@@ -15,8 +15,11 @@ namespace RPG.SceneManagement
 
         public void FadeOutImmediate()
         {
-            if(canvasGroup != null) canvasGroup.alpha = 1;
-            else Debug.Log("canvas group in fader is null");
+            if (canvasGroup == null)
+            {
+                canvasGroup = GetComponent<CanvasGroup>();
+            }
+            else if (canvasGroup != null) canvasGroup.alpha = 1;
         }
 
         public IEnumerator FadeOut(float time)

@@ -19,3 +19,4 @@ MonoBehaviour:
   isRightHanded: 0
   projectile: {fileID: 8226714154435666230, guid: 9da19bf56fd2923448135ed3c1975999,
     type: 3}
+  percentageBonus: 20

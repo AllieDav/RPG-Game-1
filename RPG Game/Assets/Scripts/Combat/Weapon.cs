@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using RPG.Core;
 using RPG.Attributes;
+using System;
 
 namespace RPG.Combat
 {
@@ -15,7 +16,7 @@ namespace RPG.Combat
         [SerializeField] GameObject equippedPrefab = null;
         [SerializeField] bool isRightHanded = true;
         [SerializeField] Projectile projectile = null;
-
+        [SerializeField] private float percentageBonus;
         const string weaponName = "Weapon";
 
         public void SpawnWeapon(Transform rightHandTransform, Transform leftHandTransform, Animator animator)
@@ -60,11 +61,17 @@ namespace RPG.Combat
 
         public bool HasProjectile() { return projectile != null; }
 
-        public void LaunchProjectile(Transform rightHand, Transform leftHand, Health target, GameObject instigator)
+        public void LaunchProjectile(Transform rightHand, Transform leftHand, Health target, GameObject instigator, float calculatedDamage)
         {
             Projectile projectileInstance =
                Instantiate(projectile, GetTransform(rightHand, leftHand).position, Quaternion.identity);
-            projectileInstance.SetTarget(target, instigator, weaponDamage);
+            //projectileInstance.SetTarget(target, instigator, weaponDamage);
+            projectileInstance.SetTarget(target, instigator, calculatedDamage);
+        }
+
+        public float ReturnPercentageBonus()
+        {
+            return percentageBonus;
         }
     }
 }
