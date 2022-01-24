@@ -19,13 +19,10 @@ namespace RPG.SceneManagement
 
         private IEnumerator LoadLastScene()
         {
-            FindObjectOfType<Fader>().FadeOutImmediate();
             yield return GetComponent<SavingSystem>().LoadLastScene(defaultSaveFile);
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            player.GetComponent<NavMeshAgent>().enabled = false;
-            Load();
-            player.GetComponent<NavMeshAgent>().enabled = true;
-            yield return FindObjectOfType<Fader>().FadeIn(fadeInTime);
+            Fader fader = FindObjectOfType<Fader>();
+            fader.FadeOutImmediate();
+            yield return fader.FadeIn(fadeInTime);
         }
 
         private void Update()
@@ -36,7 +33,7 @@ namespace RPG.SceneManagement
 
             if (Input.GetKeyDown(KeyCode.Delete)) Delete();
 
-            if (FindObjectOfType<AutoSave>().GetAutoSave() == true) Save();
+            if (GetComponent<AutoSave>().GetAutoSave() == true) Save();
         }
 
         public void Load()

@@ -6,6 +6,7 @@ using RPG.Core;
 using RPG.Saving;
 using RPG.Attributes;
 using RPG.Stats;
+using GameDevTV.Utils;
 
 namespace RPG.Combat
 {
@@ -18,14 +19,23 @@ namespace RPG.Combat
 
         Health target;
         float timeSinceLastAttack = Mathf.Infinity;
-        Weapon currentWeapon = null;
+        LazyValue<Weapon> currentWeapon;
+
 
         private void Awake()
         {
-            if (currentWeapon == null)
-            {
-                EquipWeapon(defaultWeapon);
-            }
+            currentWeapon = new LazyValue<Weapon>(SetupDefaultWeapon);
+        }
+
+        private Weapon SetupDefaultWeapon()
+        {
+            AttachWeapon(defaultWeapon);
+            return defaultWeapon;
+        }
+
+        private void Start()
+        {
+            currentWeapon.ForceInit();
         }
 
         private void Update()
@@ -48,7 +58,12 @@ namespace RPG.Combat
 
         public void EquipWeapon(Weapon weapon)
         {
-            currentWeapon = weapon;
+            AttachWeapon(weapon);
+            currentWeapon.value = weapon;
+        }
+
+        private void AttachWeapon(Weapon weapon)
+        {
             Animator animator = GetComponent<Animator>();
             weapon.SpawnWeapon(rightHandTransform, leftHandTransform, animator);
         }
@@ -77,10 +92,10 @@ namespace RPG.Combat
 
             float damage = GetComponent<BaseStats>().GetStat(Stat.Damage);
 
-            if (currentWeapon.HasProjectile())
+            if (currentWeapon.value.HasProjectile())
             { 
                 //currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, target, gameObject);
-                currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, target, gameObject, damage);
+                currentWeapon.value.LaunchProjectile(rightHandTransform, leftHandTransform, target, gameObject, damage);
             }
             //else target.TakeDamage(gameObject, currentWeapon.weaponDamage);
             else target.TakeDamage(gameObject, damage);
@@ -92,7 +107,7 @@ namespace RPG.Combat
 
         private bool GetIsInRange()
         {
-            return Vector3.Distance(transform.position, target.transform.position) < currentWeapon.weaponRange;
+            return Vector3.Distance(transform.position, target.transform.position) < currentWeapon.value.weaponRange;
         }
 
         public bool CanAttack(GameObject combatTarget)
@@ -128,7 +143,7 @@ namespace RPG.Combat
 
         public object CaptureState()
         {
-            return currentWeapon.name;
+            return currentWeapon.value.name;
         }
 
         public void RestoreState(object state)
@@ -142,7 +157,7 @@ namespace RPG.Combat
         {
             if (stat == Stat.Damage)
             {
-                yield return currentWeapon.weaponDamage;
+                yield return currentWeapon.value.weaponDamage;
             }
         }
 
@@ -150,7 +165,7 @@ namespace RPG.Combat
         {
             if (stat == Stat.Damage)
             {
-                yield return currentWeapon.ReturnPercentageBonus();
+                yield return currentWeapon.value.ReturnPercentageBonus();
             }
         }
     }

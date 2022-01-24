@@ -36,13 +36,13 @@ namespace RPG.Movement
 
         public void MoveTo(Vector3 destination)
         {
-            navMeshAgent.destination = destination;
-            navMeshAgent.isStopped = false;
+            GetComponent<NavMeshAgent>().destination = destination;
+            GetComponent<NavMeshAgent>().isStopped = false;
         }
 
         public void Cancel()
         {
-            navMeshAgent.isStopped = true;
+            GetComponent<NavMeshAgent>().isStopped = true;
         }
 
         private void UpdateAnimator()

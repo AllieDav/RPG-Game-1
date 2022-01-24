@@ -20,8 +20,16 @@ namespace RPG.Attributes
 
             SetMaxValue();
             UpdateDisplay(GetComponent<Slider>().maxValue);
+        }
 
+        private void OnEnable()
+        {
             player.GetComponent<BaseStats>().OnLevelUp += SetMaxValue;
+        }
+
+        private void OnDisable()
+        {
+            player.GetComponent<BaseStats>().OnLevelUp -= SetMaxValue;
         }
 
         private void SetMaxValue()

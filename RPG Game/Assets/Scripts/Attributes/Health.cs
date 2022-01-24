@@ -5,29 +5,49 @@ using UnityEngine;
 using RPG.Saving;
 using RPG.Core;
 using RPG.Stats;
+using GameDevTV.Utils;
 
 namespace RPG.Attributes
 {
     public class Health : MonoBehaviour, ISaveable
     {
-        [SerializeField] float healthPoints = -1f;
         [SerializeField] float regenerationPercentage = 70f;
+        LazyValue<float> healthPoints;
         bool isDead = false;
 
 
         private void Awake()
         {
-            if (healthPoints < 0)
+            healthPoints = new LazyValue<float>(GetInitialHealth);
+            if (healthPoints.value < 0)
             {
-                healthPoints = GetComponent<BaseStats>().GetStat(Stat.Health);
+                healthPoints.value = GetComponent<BaseStats>().GetStat(Stat.Health);
             }
+        }
 
+        private float GetInitialHealth()
+        {
+            return GetComponent<BaseStats>().GetStat(Stat.Health);
+        }
+
+        private void Start()
+        {
+            healthPoints.ForceInit();
+        }
+
+        private void OnEnable()
+        {
             GetComponent<BaseStats>().OnLevelUp += RegenerateHealth;
+        }
+
+        private void OnDisable()
+        {
+            GetComponent<BaseStats>().OnLevelUp -= RegenerateHealth;
         }
 
         public object CaptureState()
         {
-            return healthPoints;
+            return healthPoints.value;
         }
 
         public bool GetIsDead()
@@ -37,14 +57,14 @@ namespace RPG.Attributes
 
         public float GetHealth()
         {
-            return healthPoints;
+            return healthPoints.value;
         }
 
         public void RestoreState(object state)
         {
-            healthPoints = (float)state;
+            healthPoints.value = (float)state;
 
-            if (healthPoints == 0)
+            if (healthPoints.value == 0)
             {
                 StartCoroutine(Die());
             }
@@ -54,9 +74,9 @@ namespace RPG.Attributes
         {
             print(gameObject.name + " took " + damage + " damage.");
 
-            healthPoints = Mathf.Max(healthPoints - damage, 0);
+            healthPoints.value = Mathf.Max(healthPoints.value - damage, 0);
 
-            if (healthPoints == 0)
+            if (healthPoints.value == 0)
             {
                 StartCoroutine(Die());
                 AwardXP(instigator);
@@ -74,7 +94,7 @@ namespace RPG.Attributes
         private void RegenerateHealth()
         {
             float regenHealthPoints = GetComponent<BaseStats>().GetStat(Stat.Health) * (regenerationPercentage / 100);
-            healthPoints = Mathf.Max(healthPoints, regenHealthPoints);
+            healthPoints.value = Mathf.Max(healthPoints.value, regenHealthPoints);
         }
 
         private IEnumerator Die()

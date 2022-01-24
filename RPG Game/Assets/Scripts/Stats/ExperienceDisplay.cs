@@ -14,8 +14,16 @@ namespace RPG.Stats
         {
             text = GetComponent<Text>();
             experience = GameObject.FindWithTag("Player").GetComponent<Experience>();
+        }
 
+        private void OnEnable()
+        {
             experience.OnExperienceGained += UpdateDisplay;
+        }
+
+        private void OnDisable()
+        {
+            experience.OnExperienceGained -= UpdateDisplay;
         }
 
         private void Start()

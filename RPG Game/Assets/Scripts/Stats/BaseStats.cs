@@ -2,38 +2,58 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GameDevTV.Utils;
 
 namespace RPG.Stats
 {
     public class BaseStats : MonoBehaviour
     {
-        [Range(1, 5)]
+        [SerializeField] int maxLevel = 18;
+        [Range(1, 18)]
         [SerializeField] int startingLevel = 1;
-        [SerializeField] int maxLevel = 5;
         [SerializeField] CharacterClass characterClass;
         [SerializeField] Progression progression = null;
         [SerializeField] GameObject levelUpEffect = null;
         [SerializeField] bool shouldUseModifiers = false;
-        int currentLevel = 0;
+        
+        LazyValue<int> currentLevel;
+
+        Experience experience;
 
         public event Action OnLevelUp;
 
+        private void Awake()
+        {
+            currentLevel = new LazyValue<int>(CalculateLevel);
+            experience = GetComponent<Experience>();
+        }
+
         private void Start()
         {
-            currentLevel = CalculateLevel();
-            Experience experience = GetComponent<Experience>();
-            
+            currentLevel.ForceInit();
+        }
+
+        private void OnEnable()
+        {
             if (experience != null)
             {
                 experience.OnExperienceGained += UpdateLevel;
             }
         }
 
+        private void OnDisable()
+        {
+            if (experience != null)
+            {
+                experience.OnExperienceGained -= UpdateLevel;
+            }
+        }
+
         private void UpdateLevel()
         {
-            if (CalculateLevel() > currentLevel && CalculateLevel() <= maxLevel)
+            if (CalculateLevel() > currentLevel.value && CalculateLevel() <= maxLevel)
             {
-                currentLevel = CalculateLevel();
+                currentLevel.value = CalculateLevel();
                 OnLevelUp();
 
                 if (levelUpEffect)
@@ -86,8 +106,7 @@ namespace RPG.Stats
 
         public int GetLevel()
         {
-            if (currentLevel < 1) CalculateLevel();
-            return currentLevel;
+            return currentLevel.value;
         }
 
         private int CalculateLevel()

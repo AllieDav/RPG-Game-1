@@ -14,7 +14,16 @@ namespace RPG.Stats
         {
             text = GetComponent<Text>();
             playerStats = GameObject.FindWithTag("Player").GetComponent<BaseStats>();
+        }
+
+        private void OnEnable()
+        {
             playerStats.OnLevelUp += UpdateDisplay;
+        }
+
+        private void OnDisable()
+        {
+            playerStats.OnLevelUp -= UpdateDisplay;
         }
 
         private void Start()
