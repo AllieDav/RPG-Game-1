@@ -1382,6 +1382,11 @@ PrefabInstance:
       propertyPath: defaultName
       value: Bow Blue Projectile
       objectReference: {fileID: 0}
+    - target: {fileID: 87865911325927166, guid: cb04692be19858f4cbd87468b0b8c01b,
+        type: 3}
+      propertyPath: chaseDistance
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3185740568055661832, guid: cb04692be19858f4cbd87468b0b8c01b,
         type: 3}
       propertyPath: uniqueIdentifier
@@ -25455,86 +25460,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 573600474406997209, guid: 7890c273a97874c4d9af9dbf34804b0d,
-        type: 3}
-      propertyPath: cursorMappings.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 573600474406997209, guid: 7890c273a97874c4d9af9dbf34804b0d,
-        type: 3}
-      propertyPath: cursorMappings.Array.data[1].type
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 573600474406997209, guid: 7890c273a97874c4d9af9dbf34804b0d,
-        type: 3}
-      propertyPath: cursorMappings.Array.data[2].type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 573600474406997209, guid: 7890c273a97874c4d9af9dbf34804b0d,
-        type: 3}
-      propertyPath: cursorMappings.Array.data[3].type
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 573600474406997209, guid: 7890c273a97874c4d9af9dbf34804b0d,
-        type: 3}
-      propertyPath: cursorMappings.Array.data[0].texture
-      value: 
-      objectReference: {fileID: 2800000, guid: 21628736160fcc9488493401da3ef621, type: 3}
-    - target: {fileID: 573600474406997209, guid: 7890c273a97874c4d9af9dbf34804b0d,
-        type: 3}
-      propertyPath: cursorMappings.Array.data[1].texture
-      value: 
-      objectReference: {fileID: 2800000, guid: 2d18e23e3ce249b4489b8bcdd02d3f48, type: 3}
-    - target: {fileID: 573600474406997209, guid: 7890c273a97874c4d9af9dbf34804b0d,
-        type: 3}
-      propertyPath: cursorMappings.Array.data[2].texture
-      value: 
-      objectReference: {fileID: 2800000, guid: 2e71a8202d3b4a3448ec85ced5a40265, type: 3}
-    - target: {fileID: 573600474406997209, guid: 7890c273a97874c4d9af9dbf34804b0d,
-        type: 3}
-      propertyPath: cursorMappings.Array.data[3].texture
-      value: 
-      objectReference: {fileID: 2800000, guid: e4fac5245b727db42ba0ca0258851b83, type: 3}
-    - target: {fileID: 573600474406997209, guid: 7890c273a97874c4d9af9dbf34804b0d,
-        type: 3}
-      propertyPath: cursorMappings.Array.data[0].hotSpot.x
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 573600474406997209, guid: 7890c273a97874c4d9af9dbf34804b0d,
-        type: 3}
-      propertyPath: cursorMappings.Array.data[0].hotSpot.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 573600474406997209, guid: 7890c273a97874c4d9af9dbf34804b0d,
-        type: 3}
-      propertyPath: cursorMappings.Array.data[1].hotSpot.x
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 573600474406997209, guid: 7890c273a97874c4d9af9dbf34804b0d,
-        type: 3}
-      propertyPath: cursorMappings.Array.data[1].hotSpot.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 573600474406997209, guid: 7890c273a97874c4d9af9dbf34804b0d,
-        type: 3}
-      propertyPath: cursorMappings.Array.data[2].hotSpot.x
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 573600474406997209, guid: 7890c273a97874c4d9af9dbf34804b0d,
-        type: 3}
-      propertyPath: cursorMappings.Array.data[2].hotSpot.y
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 573600474406997209, guid: 7890c273a97874c4d9af9dbf34804b0d,
-        type: 3}
-      propertyPath: cursorMappings.Array.data[3].hotSpot.x
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 573600474406997209, guid: 7890c273a97874c4d9af9dbf34804b0d,
-        type: 3}
-      propertyPath: cursorMappings.Array.data[3].hotSpot.y
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1457001994462614565, guid: 7890c273a97874c4d9af9dbf34804b0d,
         type: 3}
