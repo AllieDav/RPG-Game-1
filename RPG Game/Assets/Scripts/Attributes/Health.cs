@@ -91,7 +91,6 @@ namespace RPG.Attributes
 
         public void TakeDamage(GameObject instigator, float damage)
         {
-
             healthPoints.value = Mathf.Max(healthPoints.value - damage, 0);
 
             if (healthPoints.value == 0)
@@ -126,6 +125,7 @@ namespace RPG.Attributes
             GetComponent<Animator>().SetTrigger("die");
 
             GetComponentInChildren<HealthBar>().UpdateBar();
+            GetComponentInChildren<PlayerHealthBar>().UpdateBar();
         }
     }
 }
