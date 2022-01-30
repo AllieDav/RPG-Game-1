@@ -47,9 +47,16 @@ namespace RPG.SceneManagement
             FindObjectOfType<SavingWrapper>().Save();
 
             DontDestroyOnLoad(gameObject);
+
+
+            PlayerController playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+            playerController.enabled = false;
+
             yield return SceneManager.LoadSceneAsync(SceneToLoad);
 
-            GameObject.FindWithTag("Player").GetComponent<PlayerController>().enabled = false;
+            PlayerController newPlayerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+            newPlayerController.enabled = true;
+
 
             FindObjectOfType<SavingWrapper>().Load();
             FindObjectOfType<SavingWrapper>().Save();
@@ -58,9 +65,9 @@ namespace RPG.SceneManagement
             UpdatePlayer(otherPortal);
 
             yield return new WaitForSeconds(waitWhileFaded);
-            yield return fader.FadeIn(timeToFadeIn);
+            fader.FadeIn(timeToFadeIn);
 
-            GameObject.FindWithTag("Player").GetComponent<PlayerController>().enabled = true;
+
 
             Destroy(gameObject);
         }

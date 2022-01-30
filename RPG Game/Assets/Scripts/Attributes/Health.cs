@@ -68,6 +68,17 @@ namespace RPG.Attributes
             return healthPoints.value;
         }
 
+        public float GetPercentage()
+        {
+            return 100 * GetFraction();
+        }
+
+        public float GetFraction()
+        {
+            return healthPoints.value / GetComponent<BaseStats>().GetStat(Stat.Health);
+        }
+
+
         public void RestoreState(object state)
         {
             healthPoints.value = (float)state;
@@ -80,7 +91,6 @@ namespace RPG.Attributes
 
         public void TakeDamage(GameObject instigator, float damage)
         {
-            print(gameObject.name + " took " + damage + " damage.");
 
             healthPoints.value = Mathf.Max(healthPoints.value - damage, 0);
 
@@ -114,6 +124,8 @@ namespace RPG.Attributes
             yield return new WaitForSeconds(0.3f);
             GetComponent<ActionScheduler>().CancelCurrentAction();
             GetComponent<Animator>().SetTrigger("die");
+
+            GetComponentInChildren<HealthBar>().UpdateBar();
         }
     }
 }
