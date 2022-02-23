@@ -20,7 +20,7 @@ namespace RPG.Stats
 
         Experience experience;
 
-        public event Action OnLevelUp;
+        public event Action onLevelUp;
 
         private void Awake()
         {
@@ -54,7 +54,7 @@ namespace RPG.Stats
             if (CalculateLevel() > currentLevel.value && CalculateLevel() <= maxLevel)
             {
                 currentLevel.value = CalculateLevel();
-                OnLevelUp();
+                onLevelUp();
 
                 if (levelUpEffect)
                 {

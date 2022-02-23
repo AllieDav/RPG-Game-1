@@ -45,12 +45,12 @@ namespace RPG.Attributes
 
         private void OnEnable()
         {
-            GetComponent<BaseStats>().OnLevelUp += RegenerateHealth;
+            GetComponent<BaseStats>().onLevelUp += Heal;
         }
 
         private void OnDisable()
         {
-            GetComponent<BaseStats>().OnLevelUp -= RegenerateHealth;
+            GetComponent<BaseStats>().onLevelUp -= Heal;
         }
 
         public object CaptureState()
@@ -91,6 +91,7 @@ namespace RPG.Attributes
 
         public void TakeDamage(GameObject instigator, float damage)
         {
+
             healthPoints.value = Mathf.Max(healthPoints.value - damage, 0);
 
             if (healthPoints.value == 0)
@@ -109,7 +110,7 @@ namespace RPG.Attributes
             experience.GainExperience(GetComponent<BaseStats>().GetStat(Stat.Experience));
         }
 
-        private void RegenerateHealth()
+        public void Heal()
         {
             float regenHealthPoints = GetComponent<BaseStats>().GetStat(Stat.Health) * (regenerationPercentage / 100);
             healthPoints.value = Mathf.Max(healthPoints.value, regenHealthPoints);
@@ -125,7 +126,6 @@ namespace RPG.Attributes
             GetComponent<Animator>().SetTrigger("die");
 
             GetComponentInChildren<HealthBar>().UpdateBar();
-            GetComponentInChildren<PlayerHealthBar>().UpdateBar();
         }
     }
 }

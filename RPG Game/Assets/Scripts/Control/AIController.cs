@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using RPG.Combat;
 using RPG.Core;
 using RPG.Movement;
-using RPG.Attributes;
 using UnityEngine;
+using RPG.Attributes;
 using GameDevTV.Utils;
 
 namespace RPG.Control
@@ -17,6 +17,8 @@ namespace RPG.Control
         [SerializeField] PatrolPath patrolPath;
         [SerializeField] float waypointTolerance = 1f;
         [SerializeField] float waypointDwellTime = 3f;
+        [Range(0, 1)]
+        [SerializeField] float patrolSpeedFraction = 0.2f;
 
         Fighter fighter;
         Health health;
@@ -27,7 +29,6 @@ namespace RPG.Control
         float timeSinceLastSawPlayer = Mathf.Infinity;
         float timeSinceArrivedAtWaypoint = Mathf.Infinity;
         int currentWaypointIndex = 0;
-
 
         private void Awake()
         {
@@ -91,7 +92,7 @@ namespace RPG.Control
 
             if (timeSinceArrivedAtWaypoint > waypointDwellTime)
             {
-                mover.StartMoveAction(nextPosition);
+                mover.StartMoveAction(nextPosition, patrolSpeedFraction);
             }
         }
 

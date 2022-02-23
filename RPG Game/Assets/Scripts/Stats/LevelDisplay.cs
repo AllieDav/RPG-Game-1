@@ -18,12 +18,12 @@ namespace RPG.Stats
 
         private void OnEnable()
         {
-            playerStats.OnLevelUp += UpdateDisplay;
+            playerStats.onLevelUp += UpdateDisplay;
         }
 
         private void OnDisable()
         {
-            playerStats.OnLevelUp -= UpdateDisplay;
+            playerStats.onLevelUp -= UpdateDisplay;
         }
 
         private void Start()
