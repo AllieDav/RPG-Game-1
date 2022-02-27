@@ -19,6 +19,8 @@ namespace RPG.Control
         [SerializeField] float waypointDwellTime = 3f;
         [Range(0, 1)]
         [SerializeField] float patrolSpeedFraction = 0.2f;
+        [SerializeField] float aggravateTime = 5f;
+        [SerializeField] float shoutDistance = 3;
 
         Fighter fighter;
         Health health;
@@ -28,6 +30,7 @@ namespace RPG.Control
         LazyValue<Vector3> guardPosition;
         float timeSinceLastSawPlayer = Mathf.Infinity;
         float timeSinceArrivedAtWaypoint = Mathf.Infinity;
+        float timeSinceAggravated = Mathf.Infinity;
         int currentWaypointIndex = 0;
 
         private void Awake()
@@ -54,7 +57,7 @@ namespace RPG.Control
         {
             if (health.GetIsDead()) return;
 
-            if (InAttackRangeOfPlayer() && fighter.CanAttack(player))
+            if (IsAggravated() && fighter.CanAttack(player))
             {
                 AttackBehaviour();
             }
@@ -70,10 +73,22 @@ namespace RPG.Control
             UpdateTimers();
         }
 
+        private bool IsAggravated()
+        {
+            float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
+            return distanceToPlayer < chaseDistance || timeSinceAggravated < aggravateTime;
+        }
+
+        public void Aggravate()
+        {
+            timeSinceAggravated = 0;
+        }
+
         private void UpdateTimers()
         {
             timeSinceLastSawPlayer += Time.deltaTime;
             timeSinceArrivedAtWaypoint += Time.deltaTime;
+            timeSinceAggravated += Time.deltaTime;
         }
 
         private void PatrolBehaviour()
@@ -120,13 +135,20 @@ namespace RPG.Control
         private void AttackBehaviour()
         {
             timeSinceLastSawPlayer = 0;
+            AggravateNearbyEnemies();
             fighter.Attack(player);
         }
 
-        private bool InAttackRangeOfPlayer()
+        private void AggravateNearbyEnemies()
         {
-            float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
-            return distanceToPlayer < chaseDistance;
+            RaycastHit[] hits = Physics.SphereCastAll(transform.position, shoutDistance, Vector3.up, 0);
+            foreach (RaycastHit hit in hits)
+            {
+                if(hit.collider.GetComponent<AIController>() != null)
+                {
+                    hit.collider.GetComponent<AIController>().Aggravate();
+                }
+            }
         }
 
         // Called by Unity

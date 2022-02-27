@@ -47,6 +47,8 @@ MonoBehaviour:
   patrolPath: {fileID: 0}
   waypointTolerance: 1
   waypointDwellTime: 1
+  patrolSpeedFraction: 0.2
+  aggravateTime: 3
 --- !u!114 &1290409417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,6 +62,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  maxSpeed: 6
+  maxNavPathLength: 40
 --- !u!114 &1290409418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,9 +92,6 @@ MonoBehaviour:
   rightHandTransform: {fileID: 2838500012373149295}
   leftHandTransform: {fileID: 2838500012373091949}
   defaultWeapon: {fileID: 11400000, guid: 90fc2eb5e1148a94f96cc59f77915bbd, type: 2}
-  onWeaponHit:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &2080049160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2298,7 +2299,7 @@ PrefabInstance:
     - target: {fileID: 7058640433569605829, guid: 8a83d2fa026be214f9f102480395c4c2,
         type: 3}
       propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7058640433569605829, guid: 8a83d2fa026be214f9f102480395c4c2,
         type: 3}
@@ -2312,12 +2313,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7058640433569605829, guid: 8a83d2fa026be214f9f102480395c4c2,
         type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7058640433569605829, guid: 8a83d2fa026be214f9f102480395c4c2,
+        type: 3}
       propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 6556064024258754669}
     - target: {fileID: 7058640433569605829, guid: 8a83d2fa026be214f9f102480395c4c2,
         type: 3}
       propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1290409416}
+    - target: {fileID: 7058640433569605829, guid: 8a83d2fa026be214f9f102480395c4c2,
+        type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
       objectReference: {fileID: 2873611747749997996}
     - target: {fileID: 7058640433569605829, guid: 8a83d2fa026be214f9f102480395c4c2,
@@ -2332,12 +2343,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7058640433569605829, guid: 8a83d2fa026be214f9f102480395c4c2,
         type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7058640433569605829, guid: 8a83d2fa026be214f9f102480395c4c2,
+        type: 3}
       propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: UpdateBar
       objectReference: {fileID: 0}
     - target: {fileID: 7058640433569605829, guid: 8a83d2fa026be214f9f102480395c4c2,
         type: 3}
       propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: Aggravate
+      objectReference: {fileID: 0}
+    - target: {fileID: 7058640433569605829, guid: 8a83d2fa026be214f9f102480395c4c2,
+        type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
       value: PlayRandomClip
       objectReference: {fileID: 0}
     - target: {fileID: 7058640433569605829, guid: 8a83d2fa026be214f9f102480395c4c2,
@@ -2348,6 +2369,11 @@ PrefabInstance:
     - target: {fileID: 7058640433569605829, guid: 8a83d2fa026be214f9f102480395c4c2,
         type: 3}
       propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7058640433569605829, guid: 8a83d2fa026be214f9f102480395c4c2,
+        type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7907489692021223022, guid: 8a83d2fa026be214f9f102480395c4c2,

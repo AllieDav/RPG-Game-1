@@ -87,6 +87,7 @@ namespace RPG.Attributes
             {
                 StartCoroutine(Die());
             }
+            if (gameObject.tag == "Player") FindObjectOfType<PlayerHealthBar>().UpdateBar();
         }
 
         public void TakeDamage(GameObject instigator, float damage)
@@ -114,6 +115,8 @@ namespace RPG.Attributes
         {
             float regenHealthPoints = GetComponent<BaseStats>().GetStat(Stat.Health) * (regenerationPercentage / 100);
             healthPoints.value = Mathf.Max(healthPoints.value, regenHealthPoints);
+
+            if (gameObject.tag == "Player") FindObjectOfType<PlayerHealthBar>().UpdateBar();
         }
 
         private IEnumerator Die()
@@ -126,6 +129,7 @@ namespace RPG.Attributes
             GetComponent<Animator>().SetTrigger("die");
 
             GetComponentInChildren<HealthBar>().UpdateBar();
+            if (gameObject.tag == "Player") FindObjectOfType<PlayerHealthBar>().UpdateBar();
         }
     }
 }
